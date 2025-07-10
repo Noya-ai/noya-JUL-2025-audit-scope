@@ -45,7 +45,7 @@ sh coverage.sh
 
 ## Audit Scope
 
-The scope of this audit includes all core smart contracts within the repository, except for contracts located in the `externals`, `mock`, and `interfaces` directories. The primary focus will be on the implementation and logic of the following components:
+The scope of this audit includes all core smart contracts within the repository, except for contracts located in the `externals`, `mock`, and `interfaces` directories and `LifiImplementation.sol` file. The primary focus will be on the implementation and logic of the following components:
 
 - Accounting Manager
 - Connectors
