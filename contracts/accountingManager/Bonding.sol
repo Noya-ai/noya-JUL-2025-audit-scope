@@ -66,7 +66,7 @@ contract Bonding is IBonding, Ownable, Pausable, ERC20 {
         }
         SafeERC20.safeTransferFrom(_underlying, sender, address(this), value);
         userStakes.push(Stake(account, value, block.timestamp, block.timestamp + duration));
-        emit Staked(msg.sender, value, duration, userStakes.length - 1);
+        emit Staked(account, value, duration, userStakes.length - 1);
 
         _mint(account, value);
         return true;
@@ -76,8 +76,8 @@ contract Bonding is IBonding, Ownable, Pausable, ERC20 {
      * @dev Allow a user to burn a number of wrapped tokens and withdraw the corresponding number of underlying tokens.
      */
     function withdrawMultiple(address account, uint256[] memory depositIds) public virtual returns (bool) {
-        if (account == address(this)) {
-            revert ERC20InvalidReceiver(account);
+        if (account != _msgSender()) {
+            revert NotTheOwner();
         }
         uint256 value = 0;
         for (uint256 i = 0; i < depositIds.length; i++) {
@@ -92,7 +92,7 @@ contract Bonding is IBonding, Ownable, Pausable, ERC20 {
             emit Unbonded(account, stake.amount, depositIds[i]);
             delete userStakes[depositIds[i]];
         }
-        _burn(_msgSender(), value);
+        _burn(account, value);
         SafeERC20.safeTransfer(_underlying, account, value);
         return true;
     }
@@ -117,6 +117,8 @@ contract Bonding is IBonding, Ownable, Pausable, ERC20 {
     function _recover(address account) public virtual onlyOwner returns (uint256) {
         uint256 value = _underlying.balanceOf(address(this)) - totalSupply();
         _mint(account, value);
+        userStakes.push(Stake(account, value, block.timestamp, block.timestamp));
+        emit Staked(account, value, 0, userStakes.length - 1);
         return value;
     }
 }

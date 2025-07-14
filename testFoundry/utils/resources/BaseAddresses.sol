@@ -36,6 +36,6 @@ contract BaseAddresses {
 
     address public morphoBlue = 0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb;
     string public RPC_URL =
-        "https://base-mainnet.g.alchemy.com/v2/4SPEdR3f3a75Q31zZ7dxRWjFTjFE9iKP";
+        "https://base-mainnet.g.alchemy.com/v2/YTZ4co0ktED8_pxzfX77Lqg9Z2z4SCX_";
     uint256 public startingBlock = 15_759_872;
 }

@@ -398,7 +398,7 @@ contract AccountingManager is IAccountingManager, ERC20, ReentrancyGuard, NoyaGo
         require(currentWithdrawGroup.isStarted == true && currentWithdrawGroup.isFullfilled == false);
         uint256 neededAssets = neededAssetsForWithdraw();
 
-        if (neededAssets != 0 && amountAskedForWithdraw != currentWithdrawGroup.totalCBAmount) {
+        if (neededAssets != 0 && amountAskedForWithdraw < currentWithdrawGroup.totalCBAmount) {
             revert NoyaAccounting_NOT_READY_TO_FULFILL();
         }
         currentWithdrawGroup.isFullfilled = true;
@@ -613,6 +613,7 @@ contract AccountingManager is IAccountingManager, ERC20, ReentrancyGuard, NoyaGo
                 address[] memory tokens = new address[](1);
                 tokens[0] = address(baseToken);
                 IConnector(connector).addLiquidity(tokens, amounts, addLPdata);
+                amountAskedForWithdraw = amountAskedForWithdraw - (amountAskedForWithdraw_temp - neededAssets);
             } else {
                 revert NoyaAccounting_INVALID_CONNECTOR();
             }

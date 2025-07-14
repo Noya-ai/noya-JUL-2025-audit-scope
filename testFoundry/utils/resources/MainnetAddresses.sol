@@ -394,6 +394,6 @@ contract MainnetAddresses {
 
     address public SNXv3Core = 0xffffffaEff0B96Ea8e4f94b2253f31abdD875847;
 
-    string public RPC_URL = "https://eth-mainnet.g.alchemy.com/v2/4SPEdR3f3a75Q31zZ7dxRWjFTjFE9iKP";
+    string public RPC_URL = "https://mainnet.infura.io/v3/7ba42ae194ff466fba204bb8cbfa60b4";
     uint256 public startingBlock = 19_262_087;
 }
